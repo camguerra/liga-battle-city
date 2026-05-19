@@ -3,393 +3,1259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Liga Domino Battle City — Plataforma competitiva de Pokémon TCG Live. Torneos online, rankings y más. Santiago, Chile.">
-<title>Liga Domino Battle City — Domino Store</title>
+<meta name="description" content="Liga Domino Battle City - Plataforma competitiva online de Pok&eacute;mon TCG Live. Torneos, ranking, resultados y Hall of Fame. Santiago, Chile.">
+<title>Liga Domino Battle City - Domino Store</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
   :root {
-    --red: #C0392B;
-    --red-dark: #922b21;
-    --red-light: #fdf0ee;
-    --gold: #D4A017;
-    --gold-light: #fdf8ec;
-    --bg: #0d0d0d;
-    --bg2: #161616;
-    --bg3: #1f1f1f;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #f0f0f0;
-    --text2: #9a9a9a;
-    --text3: #5a5a5a;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --radius: 10px;
-    --radius-lg: 14px;
+    --bg-primary: #361637;
+    --primary: #f71792;
+    --secondary: #d052ab;
+    --accent-cyan: #2cc6e6;
+    --accent-violet: #6558a5;
+    --bg-deep: #08050d;
+    --bg-panel: rgba(23, 12, 31, 0.78);
+    --bg-panel-strong: rgba(33, 15, 45, 0.92);
+    --bg-glass: rgba(27, 13, 38, 0.68);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(247, 23, 146, 0.36);
+    --text: #fff7ff;
+    --text-soft: #d9bedf;
+    --text-muted: #9b82a8;
+    --success: #6fffd2;
+    --gold: #ffd166;
+    --silver: #d7d9e8;
+    --bronze: #ff9a66;
+    --shadow-pink: 0 0 28px rgba(247, 23, 146, 0.24);
+    --shadow-cyan: 0 0 28px rgba(44, 198, 230, 0.2);
+    --radius: 8px;
+    --font-display: "Orbitron", system-ui, sans-serif;
+    --font-body: "Rajdhani", system-ui, sans-serif;
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(247, 23, 146, 0.25), transparent 34rem),
+      radial-gradient(circle at 12% 18%, rgba(44, 198, 230, 0.16), transparent 24rem),
+      radial-gradient(circle at 88% 12%, rgba(101, 88, 165, 0.24), transparent 27rem),
+      linear-gradient(180deg, #110814 0%, var(--bg-primary) 46%, #09050d 100%);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0.34;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.82), transparent 72%);
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.11;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  }
 
   a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
 
-  /* NAVBAR */
+  .page-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .page-shell::before,
+  .page-shell::after {
+    content: "";
+    position: fixed;
+    width: 34rem;
+    height: 34rem;
+    border-radius: 50%;
+    filter: blur(88px);
+    pointer-events: none;
+    z-index: -1;
+    animation: ambientPulse 8s ease-in-out infinite alternate;
+  }
+
+  .page-shell::before {
+    top: 8rem;
+    left: -16rem;
+    background: rgba(247, 23, 146, 0.15);
+  }
+
+  .page-shell::after {
+    right: -18rem;
+    bottom: 14rem;
+    background: rgba(44, 198, 230, 0.13);
+    animation-delay: -2.4s;
+  }
+
+  @keyframes ambientPulse {
+    from { transform: scale(0.92); opacity: 0.55; }
+    to { transform: scale(1.08); opacity: 0.95; }
+  }
+
   .navbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(13,13,13,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1.5rem; height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(18, 8, 27, 0.78), rgba(54, 22, 55, 0.56));
+    backdrop-filter: blur(18px);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.28);
   }
-  .navbar-brand { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: var(--text); }
-  .navbar-brand span { color: var(--red); }
-  .navbar-links { display: flex; gap: 4px; }
-  .navbar-links a {
-    font-size: 13px; color: var(--text2); padding: 6px 12px;
-    border-radius: 20px; transition: all 0.15s;
-  }
-  .navbar-links a:hover { color: var(--text); background: var(--bg3); }
-  .navbar-cta {
-    background: var(--red); color: #fff; border: none;
-    font-family: var(--font-body); font-size: 13px; font-weight: 500;
-    padding: 7px 16px; border-radius: 20px; cursor: pointer;
-    transition: opacity 0.15s; text-decoration: none;
-  }
-  .navbar-cta:hover { opacity: 0.85; }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 5rem 1.5rem 4rem;
-    border-bottom: 0.5px solid var(--border);
-    position: relative; overflow: hidden;
+  .navbar-brand {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    line-height: 1;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
   }
+
+  .navbar-brand span {
+    color: var(--primary);
+    text-shadow: 0 0 18px rgba(247, 23, 146, 0.8);
+  }
+
+  .navbar-links {
+    display: none;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .navbar-links a,
+  .navbar-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  }
+
+  .navbar-links a {
+    color: var(--text-muted);
+    padding: 0.42rem 0.7rem;
+  }
+
+  .navbar-links a:hover {
+    color: var(--text);
+    background: rgba(247, 23, 146, 0.09);
+    box-shadow: inset 0 0 0 1px rgba(247, 23, 146, 0.24), 0 0 18px rgba(247, 23, 146, 0.14);
+  }
+
+  .navbar-cta {
+    padding: 0.46rem 0.9rem;
+    color: #fff;
+    border: 1px solid rgba(247, 23, 146, 0.46);
+    background: linear-gradient(135deg, rgba(247, 23, 146, 0.95), rgba(208, 82, 171, 0.74));
+    box-shadow: var(--shadow-pink);
+  }
+
+  .navbar-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 32px rgba(247, 23, 146, 0.42);
+  }
+
+  .hero {
+    position: relative;
+    min-height: calc(100svh - 64px);
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+    padding: 3.2rem 1rem 2.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,57,43,0.12) 0%, transparent 70%);
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(247, 23, 146, 0.32), transparent 28rem),
+      radial-gradient(circle at 42% 42%, rgba(44, 198, 230, 0.18), transparent 18rem),
+      linear-gradient(180deg, rgba(8, 5, 13, 0), rgba(8, 5, 13, 0.78));
     pointer-events: none;
   }
-  .season-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 500; letter-spacing: 1px;
-    text-transform: uppercase; padding: 5px 14px;
-    border: 0.5px solid rgba(192,57,43,0.4);
-    border-radius: 20px; color: var(--red); margin-bottom: 1.5rem;
-    background: rgba(192,57,43,0.08);
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -10vw 0;
+    height: 44%;
+    pointer-events: none;
+    opacity: 0.28;
+    background:
+      linear-gradient(90deg, transparent, rgba(44, 198, 230, 0.55), transparent) 0 0 / 100% 1px no-repeat,
+      repeating-linear-gradient(90deg, rgba(247, 23, 146, 0.32) 0 1px, transparent 1px 80px),
+      linear-gradient(180deg, transparent, rgba(247, 23, 146, 0.12));
+    transform: perspective(420px) rotateX(62deg);
+    transform-origin: bottom center;
   }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .hero-copy {
+    max-width: 830px;
+  }
+
+  .season-badge {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.3rem;
+    padding: 0.48rem 0.75rem;
+    border: 1px solid rgba(44, 198, 230, 0.34);
+    border-radius: var(--radius);
+    color: var(--accent-cyan);
+    background: rgba(44, 198, 230, 0.08);
+    box-shadow: inset 0 0 16px rgba(44, 198, 230, 0.1), 0 0 24px rgba(44, 198, 230, 0.12);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(42px, 8vw, 72px);
-    letter-spacing: 3px; line-height: 1;
-    color: var(--text); margin-bottom: 0.5rem;
+    font-size: clamp(3rem, 14vw, 7.2rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-wrap: balance;
   }
-  .hero h1 span { color: var(--red); }
-  .hero-sub { font-size: 15px; color: var(--text2); margin-bottom: 2.5rem; }
-  .hero-stats {
-    display: flex; justify-content: center; gap: 3rem;
-    margin-bottom: 2.5rem;
-  }
-  .stat-num { font-family: var(--font-display); font-size: 36px; letter-spacing: 1px; color: var(--text); line-height: 1; }
-  .stat-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-  .countdown {
-    display: flex; gap: 10px; justify-content: center; margin-bottom: 2.5rem;
-  }
-  .count-box {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius); padding: 12px 18px; min-width: 64px;
-    text-align: center;
-  }
-  .count-num { font-family: var(--font-display); font-size: 32px; letter-spacing: 1px; color: var(--text); line-height: 1; }
-  .count-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-  .count-sep { font-family: var(--font-display); font-size: 28px; color: var(--red); align-self: center; }
-  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--red); color: #fff; border: none;
-    font-family: var(--font-body); font-size: 14px; font-weight: 500;
-    padding: 11px 24px; border-radius: var(--radius); cursor: pointer;
-    transition: opacity 0.15s; text-decoration: none;
-  }
-  .btn-primary:hover { opacity: 0.85; }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent; color: var(--text2);
-    border: 0.5px solid var(--border2);
-    font-family: var(--font-body); font-size: 14px; font-weight: 500;
-    padding: 11px 24px; border-radius: var(--radius); cursor: pointer;
-    transition: all 0.15s; text-decoration: none;
-  }
-  .btn-secondary:hover { color: var(--text); border-color: var(--border2); background: var(--bg2); }
 
-  /* SECTIONS */
-  .section { padding: 3rem 1.5rem; border-bottom: 0.5px solid var(--border); max-width: 900px; margin: 0 auto; }
-  .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
-  .section-title {
-    font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text);
-    display: flex; align-items: center; gap: 10px;
+  .hero h1 span {
+    display: inline-block;
+    color: transparent;
+    background: linear-gradient(90deg, var(--primary), #ff9ad7 38%, var(--accent-cyan) 94%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(247, 23, 146, 0.38));
   }
-  .section-title i { font-size: 22px; color: var(--red); }
-  .section-sub { font-size: 13px; color: var(--text3); }
 
-  /* TOURNAMENT CARDS */
-  .tournament-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-  .t-card {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.25rem;
-    transition: border-color 0.15s;
+  .hero-sub {
+    max-width: 620px;
+    margin-top: 1rem;
+    color: var(--text-soft);
+    font-size: clamp(1.08rem, 3vw, 1.35rem);
+    font-weight: 600;
   }
-  .t-card:hover { border-color: var(--border2); }
-  .t-card.featured { border-color: rgba(192,57,43,0.5); background: linear-gradient(135deg, var(--bg2) 0%, rgba(192,57,43,0.05) 100%); }
-  .t-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 8px; }
-  .t-name { font-weight: 600; font-size: 15px; color: var(--text); }
-  .t-date { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .badge {
-    font-size: 11px; font-weight: 500; padding: 3px 10px;
-    border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.6rem;
   }
-  .badge-free { background: rgba(192,57,43,0.15); color: #e88b82; }
-  .badge-open { background: rgba(39,80,10,0.3); color: #a8d96b; }
-  .badge-upcoming { background: rgba(21,65,132,0.3); color: #79b0e8; }
-  .badge-closed { background: var(--bg3); color: var(--text3); }
-  .t-info { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1rem; }
-  .t-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); }
-  .t-row i { font-size: 15px; color: var(--text3); flex-shrink: 0; }
-  .t-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 1rem; border-top: 0.5px solid var(--border);
-  }
-  .t-players { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+
+  .btn-primary,
+  .btn-secondary,
   .t-btn {
-    font-size: 12px; font-family: var(--font-body); font-weight: 500;
-    padding: 6px 14px; border-radius: 20px; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s;
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.52rem;
+    min-height: 42px;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, color 180ms ease;
   }
-  .t-btn-primary { background: var(--red); color: #fff; border: none; }
-  .t-btn-primary:hover { opacity: 0.85; }
-  .t-btn-outline { background: transparent; color: var(--text2); border: 0.5px solid var(--border2); }
-  .t-btn-outline:hover { color: var(--text); background: var(--bg3); }
 
-  /* RANKING TABLE */
-  .ranking-wrap {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); overflow: hidden;
+  .btn-primary {
+    padding: 0.7rem 1rem;
+    color: #fff;
+    border: 1px solid rgba(247, 23, 146, 0.55);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 0 30px rgba(247, 23, 146, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
   }
-  .ranking-table { width: 100%; border-collapse: collapse; }
-  .ranking-table th {
-    font-size: 11px; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.5px; color: var(--text3);
-    padding: 10px 16px; border-bottom: 0.5px solid var(--border);
-    text-align: left;
+
+  .btn-secondary {
+    padding: 0.7rem 1rem;
+    color: var(--text);
+    border: 1px solid rgba(44, 198, 230, 0.28);
+    background: rgba(44, 198, 230, 0.07);
+    box-shadow: inset 0 0 18px rgba(44, 198, 230, 0.07);
   }
-  .ranking-table td {
-    font-size: 13px; color: var(--text);
-    padding: 12px 16px; border-bottom: 0.5px solid var(--border);
+
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .t-btn:hover {
+    transform: translateY(-2px);
   }
-  .ranking-table tr:last-child td { border-bottom: none; }
-  .ranking-table tbody tr:hover td { background: var(--bg3); }
-  .pos-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 26px; height: 26px; border-radius: 50%;
-    font-size: 12px; font-weight: 600;
+
+  .btn-primary:hover { box-shadow: 0 0 38px rgba(247, 23, 146, 0.46); }
+  .btn-secondary:hover {
+    border-color: rgba(44, 198, 230, 0.56);
+    box-shadow: var(--shadow-cyan);
   }
-  .pos-1 { background: rgba(212,160,23,0.2); color: var(--gold); }
-  .pos-2 { background: rgba(180,180,180,0.15); color: #ccc; }
-  .pos-3 { background: rgba(192,57,43,0.2); color: #e88b82; }
-  .pos-n { background: var(--bg3); color: var(--text3); }
-  .trainer-name { font-weight: 500; }
-  .qualify-chip {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 11px; padding: 2px 8px; border-radius: 20px;
-    background: rgba(39,80,10,0.3); color: #a8d96b;
+
+  .hero-panel {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(23, 12, 31, 0.92), rgba(16, 8, 25, 0.76));
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255,255,255,0.08);
+    overflow: hidden;
   }
-  .points-val { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.5px; color: var(--red); }
-  .empty-state {
-    text-align: center; padding: 3rem 1rem; color: var(--text3);
+
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(247, 23, 146, 0.18), transparent 42%, rgba(44, 198, 230, 0.12));
+    pointer-events: none;
   }
-  .empty-state i { font-size: 32px; display: block; margin-bottom: 0.75rem; opacity: 0.3; }
-  .empty-state p { font-size: 14px; }
-  .empty-state small { font-size: 12px; }
+
+  .hero-stats,
+  .countdown {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .stat,
+  .count-box {
+    position: relative;
+    min-height: 92px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.035);
+    overflow: hidden;
+  }
+
+  .stat::before,
+  .count-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+    opacity: 0.78;
+  }
+
+  .stat {
+    padding: 0.9rem;
+  }
+
+  .stat-num,
+  .count-num {
+    font-family: var(--font-display);
+    color: var(--text);
+    line-height: 1;
+    text-shadow: 0 0 18px rgba(247, 23, 146, 0.28);
+  }
+
+  .stat-num { font-size: 2rem; }
+  .count-num { font-size: 2.2rem; }
+
+  .stat-label,
+  .count-label {
+    margin-top: 0.32rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .countdown {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .count-box {
+    align-items: center;
+    min-height: 86px;
+    padding: 0.65rem 0.35rem;
+    animation: glowBreath 3.6s ease-in-out infinite;
+  }
+
+  .count-sep { display: none; }
+
+  @keyframes glowBreath {
+    0%, 100% { box-shadow: inset 0 0 0 rgba(247, 23, 146, 0); }
+    50% { box-shadow: inset 0 0 28px rgba(247, 23, 146, 0.08); }
+  }
+
+  .section {
+    position: relative;
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 3rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .section-header {
+    display: grid;
+    gap: 0.4rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 5vw, 2.1rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .section-title i {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 18px rgba(44, 198, 230, 0.68);
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .tournament-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .t-card,
+  .ranking-wrap,
+  .result-card,
+  .hall-card,
+  .step-card,
   .points-legend {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius); padding: 12px 16px;
-    display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-panel), rgba(13, 7, 21, 0.86));
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.06);
   }
-  .legend-item { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
-  .legend-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
 
-  /* RESULTS */
-  .results-list { display: flex; flex-direction: column; gap: 10px; }
+  .t-card {
+    padding: 1rem;
+    overflow: hidden;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .t-card::before,
+  .result-card::before,
+  .hall-card::before,
+  .step-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(247, 23, 146, 0.13), transparent 48%, rgba(44, 198, 230, 0.1));
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+  }
+
+  .t-card:hover,
+  .result-card:hover,
+  .hall-card:hover,
+  .step-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(44, 198, 230, 0.38);
+    box-shadow: 0 22px 58px rgba(0, 0, 0, 0.34), 0 0 26px rgba(44, 198, 230, 0.13);
+  }
+
+  .t-card:hover::before,
+  .result-card:hover::before,
+  .hall-card:hover::before,
+  .step-card:hover::before {
+    opacity: 1;
+  }
+
+  .t-card.featured {
+    border-color: rgba(247, 23, 146, 0.42);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.34), 0 0 34px rgba(247, 23, 146, 0.16);
+  }
+
+  .t-card.featured::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-cyan), var(--accent-violet));
+  }
+
+  .t-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .t-name {
+    color: var(--text);
+    font-size: 1.12rem;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .t-date {
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .badge,
+  .rank-chip,
+  .qualify-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.32rem;
+    min-height: 26px;
+    border-radius: var(--radius);
+    padding: 0.22rem 0.55rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-free { color: var(--accent-cyan); background: rgba(44, 198, 230, 0.09); border-color: rgba(44, 198, 230, 0.28); }
+  .badge-open { color: var(--success); background: rgba(111, 255, 210, 0.08); border-color: rgba(111, 255, 210, 0.26); }
+  .badge-upcoming { color: #fff; background: rgba(247, 23, 146, 0.16); border-color: rgba(247, 23, 146, 0.36); box-shadow: 0 0 20px rgba(247, 23, 146, 0.18); }
+  .badge-closed { color: var(--text-muted); background: rgba(255,255,255,0.06); }
+
+  .t-info {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.56rem;
+    margin-bottom: 1.05rem;
+  }
+
+  .t-row {
+    display: flex;
+    align-items: center;
+    gap: 0.58rem;
+    color: var(--text-soft);
+    font-size: 0.96rem;
+    font-weight: 600;
+  }
+
+  .t-row i {
+    flex: 0 0 auto;
+    color: var(--accent-cyan);
+  }
+
+  .t-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .t-players {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .t-btn {
+    min-height: 34px;
+    padding: 0.38rem 0.72rem;
+    font-size: 0.78rem;
+  }
+
+  .t-btn-primary {
+    color: #fff;
+    border: 1px solid rgba(247, 23, 146, 0.48);
+    background: linear-gradient(135deg, rgba(247, 23, 146, 0.95), rgba(208, 82, 171, 0.72));
+  }
+
+  .t-btn-outline {
+    color: var(--text-soft);
+    border: 1px solid rgba(44, 198, 230, 0.25);
+    background: rgba(44, 198, 230, 0.06);
+  }
+
+  .ranking-wrap {
+    overflow: hidden;
+  }
+
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .ranking-table th {
+    padding: 0.75rem 0.7rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .ranking-table td {
+    padding: 0.75rem 0.7rem;
+    color: var(--text);
+    border-bottom: 1px solid rgba(255,255,255,0.075);
+    font-size: 0.94rem;
+    font-weight: 700;
+  }
+
+  .ranking-table tr:last-child td { border-bottom: none; }
+  .ranking-table tbody tr {
+    transition: background 180ms ease, box-shadow 180ms ease;
+  }
+
+  .ranking-table tbody tr:hover {
+    background: rgba(44, 198, 230, 0.045);
+  }
+
+  .ranking-table tbody tr.leader {
+    background: linear-gradient(90deg, rgba(247, 23, 146, 0.16), transparent 68%);
+    box-shadow: inset 3px 0 0 var(--primary), inset 0 0 24px rgba(247, 23, 146, 0.08);
+  }
+
+  .pos-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+
+  .pos-1 { color: #1a1022; background: linear-gradient(135deg, var(--gold), #fff1a8); box-shadow: 0 0 22px rgba(255, 209, 102, 0.34); }
+  .pos-2 { color: #111827; background: linear-gradient(135deg, var(--silver), #ffffff); }
+  .pos-3 { color: #1d0c0c; background: linear-gradient(135deg, var(--bronze), #ffd1b8); }
+  .pos-n { color: var(--accent-cyan); border: 1px solid rgba(44, 198, 230, 0.24); background: rgba(44, 198, 230, 0.08); }
+
+  .trainer-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+  }
+
+  .trainer-alias {
+    color: var(--text);
+    font-size: 1rem;
+  }
+
+  .rank-chip { width: fit-content; }
+  .rank-chip.leader-chip { color: var(--gold); border-color: rgba(255, 209, 102, 0.3); background: rgba(255, 209, 102, 0.08); }
+  .rank-chip.top-chip { color: var(--accent-cyan); border-color: rgba(44, 198, 230, 0.28); background: rgba(44, 198, 230, 0.08); }
+  .rank-chip.chase-chip { color: var(--text-muted); background: rgba(255,255,255,0.045); }
+
+  .qualify-chip {
+    color: var(--success);
+    background: rgba(111, 255, 210, 0.08);
+    border-color: rgba(111, 255, 210, 0.24);
+  }
+
+  .points-val {
+    font-family: var(--font-display);
+    color: var(--primary);
+    font-size: 1.08rem;
+    text-shadow: 0 0 16px rgba(247, 23, 146, 0.34);
+  }
+
+  .points-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.2rem;
+    margin-top: 1rem;
+    padding: 0.9rem;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 14px currentColor;
+  }
+
+  .results-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
   .result-card {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    display: grid;
+    gap: 0.9rem;
+    padding: 1rem;
+    overflow: hidden;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
   }
-  .result-card:hover { border-color: var(--border2); }
-  .result-left { flex: 1; min-width: 0; }
-  .result-title { font-weight: 500; font-size: 14px; color: var(--text); margin-bottom: 4px; }
-  .result-meta { font-size: 12px; color: var(--text3); display: flex; gap: 12px; flex-wrap: wrap; }
-  .result-meta span { display: flex; align-items: center; gap: 4px; }
-  .result-winner { text-align: right; flex-shrink: 0; }
-  .result-winner-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
-  .result-winner-name { font-weight: 600; font-size: 15px; color: var(--text); }
-  .result-winner-deck { font-size: 12px; color: var(--text2); }
 
-  /* HALL OF FAME */
-  .hall-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .result-left,
+  .result-winner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text);
+    font-size: 1.08rem;
+    font-weight: 800;
+  }
+
+  .result-title i {
+    color: var(--accent-cyan);
+  }
+
+  .result-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 1rem;
+    margin-top: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .result-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.36rem;
+  }
+
+  .result-winner {
+    display: grid;
+    gap: 0.18rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(247, 23, 146, 0.18);
+    border-radius: var(--radius);
+    background: rgba(247, 23, 146, 0.065);
+  }
+
+  .result-winner-label {
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .result-winner-name {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+
+  .result-winner-deck {
+    color: var(--accent-cyan);
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .hall-grid,
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   .hall-card {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.5rem 1.25rem;
-    text-align: center; transition: border-color 0.15s;
+    display: grid;
+    gap: 0.45rem;
+    min-height: 176px;
+    place-items: center;
+    padding: 1.35rem 1rem;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
   }
-  .hall-card.champion { border-color: rgba(212,160,23,0.4); background: linear-gradient(135deg, var(--bg2) 0%, rgba(212,160,23,0.05) 100%); }
-  .hall-card:hover { border-color: var(--border2); }
-  .hall-season { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-  .hall-icon { font-size: 32px; margin-bottom: 10px; }
-  .hall-name { font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 4px; }
-  .hall-deck { font-size: 12px; color: var(--text2); }
-  .hall-pending { font-size: 13px; color: var(--text3); }
 
-  /* HOW TO PLAY */
-  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .hall-card.champion {
+    border-color: rgba(255, 209, 102, 0.28);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28), 0 0 24px rgba(255, 209, 102, 0.1);
+  }
+
+  .hall-season {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hall-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    color: #1d1026;
+    background: linear-gradient(135deg, var(--gold), #fff1a8);
+    box-shadow: 0 0 24px rgba(255, 209, 102, 0.28);
+    font-size: 1.7rem;
+  }
+
+  .hall-name {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  .hall-deck,
+  .hall-pending {
+    color: var(--text-soft);
+    font-size: 0.94rem;
+    font-weight: 700;
+  }
+
   .step-card {
-    background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center;
+    min-height: 168px;
+    padding: 1.1rem;
+    overflow: hidden;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
   }
+
   .step-num {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(192,57,43,0.15); color: var(--red);
-    font-family: var(--font-display); font-size: 18px;
-    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0.85rem;
+    border: 1px solid rgba(44, 198, 230, 0.25);
+    border-radius: var(--radius);
+    color: var(--accent-cyan);
+    background: rgba(44, 198, 230, 0.08);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    box-shadow: 0 0 22px rgba(44, 198, 230, 0.12);
   }
-  .step-title { font-weight: 600; font-size: 13px; color: var(--text); margin-bottom: 6px; }
-  .step-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
 
-  /* FOOTER */
+  .step-title {
+    color: var(--text);
+    font-size: 1.04rem;
+    font-weight: 800;
+  }
+
+  .step-desc {
+    margin-top: 0.35rem;
+    color: var(--text-soft);
+    font-size: 0.93rem;
+    font-weight: 600;
+  }
+
+  .section-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.7rem;
+  }
+
+  .footer-wrap {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(8, 5, 13, 0.2), rgba(8, 5, 13, 0.82));
+  }
+
   .footer {
-    padding: 2rem 1.5rem;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 1rem; max-width: 900px; margin: 0 auto;
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 2rem 0;
+    display: grid;
+    gap: 1.2rem;
   }
-  .footer-brand { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; }
-  .footer-brand span { color: var(--red); }
-  .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
-  .footer-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; color: var(--text3);
-    padding: 6px 12px; border-radius: 20px;
-    border: 0.5px solid var(--border); transition: all 0.15s;
-  }
-  .footer-link:hover { color: var(--text); border-color: var(--border2); }
-  .footer-copy { width: 100%; text-align: center; font-size: 12px; color: var(--text3); padding-top: 1rem; border-top: 0.5px solid var(--border); }
 
-  /* MOBILE */
-  @media (max-width: 600px) {
-    .navbar-links { display: none; }
-    .hero { padding: 3rem 1rem 2.5rem; }
-    .hero-stats { gap: 1.5rem; }
-    .section { padding: 2rem 1rem; }
-    .footer { flex-direction: column; align-items: flex-start; }
+  .footer-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .footer-brand span {
+    color: var(--primary);
+    text-shadow: 0 0 16px rgba(247, 23, 146, 0.58);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    min-height: 34px;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.035);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: color 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .footer-link:hover {
+    color: var(--text);
+    border-color: rgba(44, 198, 230, 0.34);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-cyan);
+  }
+
+  .footer-copy {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 700ms ease, transform 700ms ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (min-width: 560px) {
+    .navbar {
+      padding-inline: 1.25rem;
+    }
+
+    .navbar-brand {
+      flex-direction: row;
+      gap: 0.42rem;
+      font-size: 1rem;
+    }
+
+    .hero {
+      padding-inline: 1.5rem;
+    }
+
+    .hero-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+    }
+
+    .result-card {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    .result-winner {
+      min-width: 210px;
+      text-align: right;
+    }
+
+    .hall-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 820px) {
+    .navbar {
+      padding-inline: 1.5rem;
+    }
+
+    .navbar-links {
+      display: flex;
+    }
+
+    .hero {
+      min-height: 82svh;
+      padding-block: 4.4rem 3rem;
+    }
+
+    .hero-inner {
+      grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.75fr);
+      align-items: center;
+    }
+
+    .hero-panel {
+      padding: 1rem;
+    }
+
+    .tournament-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .footer {
+      padding-block: 2.4rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .navbar-cta {
+      font-size: 0.74rem;
+      padding-inline: 0.72rem;
+    }
+
+    .countdown {
+      gap: 0.48rem;
+    }
+
+    .count-num {
+      font-size: 1.55rem;
+    }
+
+    .count-label,
+    .stat-label {
+      font-size: 0.68rem;
+    }
+
+    .ranking-table th:nth-child(3),
+    .ranking-table td:nth-child(3),
+    .ranking-table th:nth-child(5),
+    .ranking-table td:nth-child(5) {
+      display: none;
+    }
+
+    .ranking-table th,
+    .ranking-table td {
+      padding-inline: 0.55rem;
+    }
+
+    .t-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
   }
 </style>
 </head>
 <body>
+<div class="page-shell">
 
 <nav class="navbar">
-  <div class="navbar-brand"><span>DOMINO</span> STORE</div>
-  <div class="navbar-links">
+  <a class="navbar-brand" href="#top" aria-label="Domino Store">
+    <span>DOMINO</span> STORE
+  </a>
+  <div class="navbar-links" aria-label="Navegaci&oacute;n principal">
     <a href="#torneos">Torneos</a>
     <a href="#ranking">Ranking</a>
     <a href="#resultados">Resultados</a>
     <a href="#hall">Hall of Fame</a>
-    <a href="#como">Cómo participar</a>
+    <a href="#como">C&oacute;mo participar</a>
   </div>
-  <a class="navbar-cta" href="https://challonge.com/es/users/dominostore" target="_blank">Inscribirse</a>
+  <a class="navbar-cta" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">Inscribirse</a>
 </nav>
 
-<section class="hero">
-  <div class="season-badge"><i class="ti ti-sword"></i> Temporada 1 — Mayo / Junio 2026</div>
-  <h1>Liga <span>Domino</span><br>Battle City</h1>
-  <p class="hero-sub">Pokémon TCG Live · Formato Estándar · Online · Chile</p>
+<section id="top" class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="season-badge"><i class="ti ti-sword"></i> Temporada 1 - Mayo / Junio 2026</div>
+      <h1>Liga <span>Domino</span><br>Battle City</h1>
+      <p class="hero-sub">Pok&eacute;mon TCG Live &middot; Formato Est&aacute;ndar &middot; Online &middot; Chile</p>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num" id="stat-days">--</div>
-      <div class="stat-label">Días para el Open</div>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">
+          <i class="ti ti-trophy"></i> Ver bracket en Challonge
+        </a>
+        <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank" rel="noopener">
+          <i class="ti ti-brand-instagram"></i> @dominostorecl
+        </a>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-num">8</div>
-      <div class="stat-label">Fechas totales</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">0</div>
-      <div class="stat-label">Entrenadores activos</div>
-    </div>
-  </div>
 
-  <div class="countdown">
-    <div class="count-box">
-      <div class="count-num" id="c-days">--</div>
-      <div class="count-label">días</div>
-    </div>
-    <div class="count-sep">:</div>
-    <div class="count-box">
-      <div class="count-num" id="c-hours">--</div>
-      <div class="count-label">horas</div>
-    </div>
-    <div class="count-sep">:</div>
-    <div class="count-box">
-      <div class="count-num" id="c-mins">--</div>
-      <div class="count-label">min</div>
-    </div>
-    <div class="count-sep">:</div>
-    <div class="count-box">
-      <div class="count-num" id="c-secs">--</div>
-      <div class="count-label">seg</div>
-    </div>
-  </div>
+    <aside class="hero-panel reveal" aria-label="Estado de la liga">
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-days">--</div>
+          <div class="stat-label">D&iacute;as para el Open</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8</div>
+          <div class="stat-label">Fechas totales</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Entrenadores activos</div>
+        </div>
+      </div>
 
-  <div class="hero-actions">
-    <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
-      <i class="ti ti-trophy"></i> Ver bracket en Challonge
-    </a>
-    <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank">
-      <i class="ti ti-brand-instagram"></i> @dominostorecl
-    </a>
+      <div class="countdown" aria-label="Cuenta regresiva al Open Final">
+        <div class="count-box">
+          <div class="count-num" id="c-days">--</div>
+          <div class="count-label">d&iacute;as</div>
+        </div>
+        <div class="count-sep">:</div>
+        <div class="count-box">
+          <div class="count-num" id="c-hours">--</div>
+          <div class="count-label">horas</div>
+        </div>
+        <div class="count-sep">:</div>
+        <div class="count-box">
+          <div class="count-num" id="c-mins">--</div>
+          <div class="count-label">min</div>
+        </div>
+        <div class="count-sep">:</div>
+        <div class="count-box">
+          <div class="count-num" id="c-secs">--</div>
+          <div class="count-label">seg</div>
+        </div>
+      </div>
+    </aside>
   </div>
 </section>
 
 <main>
 
-  <section id="torneos" class="section">
+  <section id="torneos" class="section reveal">
     <div class="section-header">
-      <div class="section-title"><i class="ti ti-calendar-event"></i> Próximos torneos</div>
-      <span class="section-sub">Mié 20:00 · Sáb 15:00</span>
+      <div class="section-title"><i class="ti ti-calendar-event"></i> Pr&oacute;ximos torneos</div>
+      <span class="section-sub">Mi&eacute; 20:00 &middot; S&aacute;b 15:00</span>
     </div>
     <div class="tournament-grid">
 
       <div class="t-card featured">
         <div class="t-header">
           <div>
-            <div class="t-name">Open Final — Temporada 1</div>
-            <div class="t-date">Sábado 20 de junio · 15:00 hrs</div>
+            <div class="t-name">Open Final - Temporada 1</div>
+            <div class="t-date">S&aacute;bado 20 de junio &middot; 15:00 hrs</div>
           </div>
-          <span class="badge badge-upcoming">Próximo</span>
+          <span class="badge badge-upcoming">Pr&oacute;ximo</span>
         </div>
         <div class="t-info">
-          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pokémon TCG Live — Estándar</div>
-          <div class="t-row"><i class="ti ti-tournament"></i> Brackets · BO1 cuartos · BO3 semis y final</div>
-          <div class="t-row"><i class="ti ti-gift"></i> Premio especial según participantes</div>
+          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pok&eacute;mon TCG Live - Est&aacute;ndar</div>
+          <div class="t-row"><i class="ti ti-tournament"></i> Brackets &middot; BO1 cuartos &middot; BO3 semis y final</div>
+          <div class="t-row"><i class="ti ti-gift"></i> Premio especial seg&uacute;n participantes</div>
           <div class="t-row"><i class="ti ti-star"></i> Top 4 del ranking clasifica gratis</div>
         </div>
         <div class="t-footer">
           <span class="t-players"><i class="ti ti-users"></i> Cupos abiertos</span>
-          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">
             Inscribirse <i class="ti ti-arrow-right"></i>
           </a>
         </div>
@@ -398,20 +1264,20 @@
       <div class="t-card">
         <div class="t-header">
           <div>
-            <div class="t-name">Fecha 1 — Miércoles</div>
-            <div class="t-date">Miércoles 20 de mayo · 20:00 hrs</div>
+            <div class="t-name">Fecha 1 - Mi&eacute;rcoles</div>
+            <div class="t-date">Mi&eacute;rcoles 20 de mayo &middot; 20:00 hrs</div>
           </div>
           <span class="badge badge-free">Gratuito</span>
         </div>
         <div class="t-info">
-          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pokémon TCG Live — Estándar</div>
-          <div class="t-row"><i class="ti ti-layout-grid"></i> Rondas suizas · BO1</div>
+          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pok&eacute;mon TCG Live - Est&aacute;ndar</div>
+          <div class="t-row"><i class="ti ti-layout-grid"></i> Rondas suizas &middot; BO1</div>
           <div class="t-row"><i class="ti ti-gift"></i> Sobres para el top 3</div>
           <div class="t-row"><i class="ti ti-chart-bar"></i> Acumula puntos para el ranking</div>
         </div>
         <div class="t-footer">
           <span class="t-players"><i class="ti ti-users"></i> Inscripciones abiertas</span>
-          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">
             Inscribirse <i class="ti ti-arrow-right"></i>
           </a>
         </div>
@@ -420,9 +1286,9 @@
     </div>
   </section>
 
-  <section id="ranking" class="section">
+  <section id="ranking" class="section reveal">
     <div class="section-header">
-      <div class="section-title"><i class="ti ti-chart-bar"></i> Ranking — Temporada 1</div>
+      <div class="section-title"><i class="ti ti-chart-bar"></i> Ranking - Temporada 1</div>
       <span class="section-sub">Top 4 clasifica gratis al Open</span>
     </div>
     <div class="ranking-wrap">
@@ -433,95 +1299,178 @@
             <th>Entrenador</th>
             <th style="text-align:center; width:80px">Jugados</th>
             <th style="text-align:center; width:80px">Puntos</th>
-            <th style="text-align:center; width:120px">Estado</th>
+            <th style="text-align:center; width:132px">Estado</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td colspan="5">
-              <div class="empty-state">
-                <i class="ti ti-trophy"></i>
-                <p>El ranking se publica tras la Fecha 1</p>
-                <small>Miércoles 20 de mayo · 20:00 hrs</small>
+          <tr class="leader">
+            <td><span class="pos-badge pos-1">1</span></td>
+            <td>
+              <div class="trainer-name">
+                <span class="trainer-alias">ShadowMew</span>
+                <span class="rank-chip leader-chip"><i class="ti ti-crown"></i> L&iacute;der</span>
               </div>
             </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center"><span class="points-val">18</span></td>
+            <td style="text-align:center"><span class="qualify-chip"><i class="ti ti-bolt"></i> Top 4</span></td>
+          </tr>
+          <tr>
+            <td><span class="pos-badge pos-2">2</span></td>
+            <td>
+              <div class="trainer-name">
+                <span class="trainer-alias">Neonachu</span>
+                <span class="rank-chip top-chip"><i class="ti ti-sparkles"></i> Finalista</span>
+              </div>
+            </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center"><span class="points-val">16</span></td>
+            <td style="text-align:center"><span class="qualify-chip"><i class="ti ti-bolt"></i> Top 4</span></td>
+          </tr>
+          <tr>
+            <td><span class="pos-badge pos-3">3</span></td>
+            <td>
+              <div class="trainer-name">
+                <span class="trainer-alias">DracoEX</span>
+                <span class="rank-chip top-chip"><i class="ti ti-flame"></i> Podio</span>
+              </div>
+            </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center"><span class="points-val">14</span></td>
+            <td style="text-align:center"><span class="qualify-chip"><i class="ti ti-bolt"></i> Top 4</span></td>
+          </tr>
+          <tr>
+            <td><span class="pos-badge pos-n">4</span></td>
+            <td>
+              <div class="trainer-name">
+                <span class="trainer-alias">KoraidonCL</span>
+                <span class="rank-chip top-chip"><i class="ti ti-shield-check"></i> Zona Open</span>
+              </div>
+            </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center"><span class="points-val">12</span></td>
+            <td style="text-align:center"><span class="qualify-chip"><i class="ti ti-bolt"></i> Top 4</span></td>
+          </tr>
+          <tr>
+            <td><span class="pos-badge pos-n">5</span></td>
+            <td>
+              <div class="trainer-name">
+                <span class="trainer-alias">PsyduckPro</span>
+                <span class="rank-chip chase-chip"><i class="ti ti-target-arrow"></i> En carrera</span>
+              </div>
+            </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center"><span class="points-val">10</span></td>
+            <td style="text-align:center"><span class="rank-chip chase-chip">Chase</span></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="points-legend">
-      <div class="legend-item"><span class="legend-dot"></span> 1° lugar: 8 pts</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#888"></span> 2° lugar: 6 pts</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#555"></span> 3°–4° lugar: 4 pts</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#333"></span> 5°–8° lugar: 2 pts</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#222"></span> Participación: 1 pt</div>
+      <div class="legend-item"><span class="legend-dot"></span> 1&deg; lugar: 8 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--accent-cyan)"></span> 2&deg; lugar: 6 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--accent-violet)"></span> 3&deg;-4&deg; lugar: 4 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--secondary)"></span> 5&deg;-8&deg; lugar: 2 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--text-muted)"></span> Participaci&oacute;n: 1 pt</div>
     </div>
   </section>
 
-  <section id="resultados" class="section">
+  <section id="resultados" class="section reveal">
     <div class="section-header">
       <div class="section-title"><i class="ti ti-history"></i> Resultados</div>
+      <span class="section-sub">Fechas jugadas</span>
     </div>
     <div class="results-list">
-      <div class="empty-state">
-        <i class="ti ti-calendar-off"></i>
-        <p>Aún no hay fechas jugadas</p>
-        <small>Primera fecha: 20 de mayo · 20:00 hrs</small>
-      </div>
+      <article class="result-card">
+        <div class="result-left">
+          <div class="result-title"><i class="ti ti-hexagon-number-1"></i> Fecha 1</div>
+          <div class="result-meta">
+            <span><i class="ti ti-device-gamepad-2"></i> Pok&eacute;mon TCG Live</span>
+            <span><i class="ti ti-cards"></i> Formato Est&aacute;ndar</span>
+          </div>
+        </div>
+        <div class="result-winner">
+          <div class="result-winner-label">Ganador</div>
+          <div class="result-winner-name">ShadowMew</div>
+          <div class="result-winner-deck">Deck: Dragapult ex</div>
+        </div>
+      </article>
+
+      <article class="result-card">
+        <div class="result-left">
+          <div class="result-title"><i class="ti ti-hexagon-number-2"></i> Fecha 2</div>
+          <div class="result-meta">
+            <span><i class="ti ti-device-gamepad-2"></i> Pok&eacute;mon TCG Live</span>
+            <span><i class="ti ti-cards"></i> Formato Est&aacute;ndar</span>
+          </div>
+        </div>
+        <div class="result-winner">
+          <div class="result-winner-label">Ganador</div>
+          <div class="result-winner-name">Neonachu</div>
+          <div class="result-winner-deck">Deck: Gardevoir ex</div>
+        </div>
+      </article>
     </div>
   </section>
 
-  <section id="hall" class="section">
+  <section id="hall" class="section reveal">
     <div class="section-header">
       <div class="section-title"><i class="ti ti-crown"></i> Hall of Fame</div>
       <span class="section-sub">Campeones de temporada</span>
     </div>
     <div class="hall-grid">
       <div class="hall-card champion">
-        <div class="hall-season">Temporada 1 · Mayo–Junio 2026</div>
-        <div class="hall-icon">🏆</div>
-        <div class="hall-name" style="color: var(--text2);">Por definir</div>
+        <div class="hall-season">Temporada 0</div>
+        <div class="hall-icon"><i class="ti ti-crown"></i></div>
+        <div class="hall-name">Neonachu</div>
+        <div class="hall-deck">Deck: Miraidon ex</div>
+      </div>
+
+      <div class="hall-card">
+        <div class="hall-season">Temporada 1 &middot; Mayo-Junio 2026</div>
+        <div class="hall-icon"><i class="ti ti-trophy"></i></div>
+        <div class="hall-name" style="color: var(--text-soft);">Por definir</div>
         <div class="hall-pending">Open Final: 20 de junio</div>
       </div>
     </div>
   </section>
 
-  <section id="como" class="section">
+  <section id="como" class="section reveal">
     <div class="section-header">
-      <div class="section-title"><i class="ti ti-help-circle"></i> Cómo participar</div>
+      <div class="section-title"><i class="ti ti-help-circle"></i> C&oacute;mo participar</div>
     </div>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">1</div>
-        <div class="step-title">Inscríbete</div>
-        <div class="step-desc">Completa el formulario con tu nombre y tu ID de Pokémon TCG Live</div>
+        <div class="step-title">Inscr&iacute;bete</div>
+        <div class="step-desc">Completa el formulario con tu nombre y tu ID de Pok&eacute;mon TCG Live.</div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-title">Paga</div>
-        <div class="step-desc">Transfiere la inscripción a Domino Store. Cupo confirmado al recibir el pago</div>
+        <div class="step-desc">Transfiere la inscripci&oacute;n a Domino Store. Cupo confirmado al recibir el pago.</div>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
-        <div class="step-title">Únete</div>
-        <div class="step-desc">Entra al grupo de WhatsApp y recibe el bracket antes del inicio</div>
+        <div class="step-title">&Uacute;nete</div>
+        <div class="step-desc">Entra al grupo de WhatsApp y recibe el bracket antes del inicio.</div>
       </div>
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-title">Juega</div>
-        <div class="step-desc">Busca a tu rival en TCG Live y reporta el resultado en Challonge</div>
+        <div class="step-desc">Busca a tu rival en TCG Live y reporta el resultado en Challonge.</div>
       </div>
       <div class="step-card">
         <div class="step-num">5</div>
         <div class="step-title">Acumula</div>
-        <div class="step-desc">Suma puntos al ranking y clasifica al Open Final de temporada</div>
+        <div class="step-desc">Suma puntos al ranking y clasifica al Open Final de temporada.</div>
       </div>
     </div>
-    <div style="text-align:center; margin-top: 2rem; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+    <div class="section-actions">
+      <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">
         <i class="ti ti-tournament"></i> Ver torneos en Challonge
       </a>
-      <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank">
+      <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank" rel="noopener">
         <i class="ti ti-brand-instagram"></i> Seguirnos en Instagram
       </a>
     </div>
@@ -529,56 +1478,90 @@
 
 </main>
 
-<footer style="border-top: 0.5px solid var(--border);">
+<footer class="footer-wrap">
   <div class="footer">
-    <div class="footer-brand"><span>DOMINO</span> STORE</div>
-    <div class="footer-links">
-      <a class="footer-link" href="https://instagram.com/dominostorecl" target="_blank">
-        <i class="ti ti-brand-instagram"></i> Instagram
-      </a>
-      <a class="footer-link" href="https://challonge.com/es/users/dominostore" target="_blank">
-        <i class="ti ti-tournament"></i> Challonge
-      </a>
-      <a class="footer-link" href="https://tcgmatch.cl" target="_blank">
-        <i class="ti ti-cards"></i> TCG Match
-      </a>
-      <a class="footer-link" href="https://wa.me/56900000000" target="_blank">
-        <i class="ti ti-brand-whatsapp"></i> WhatsApp
-      </a>
+    <div class="footer-top">
+      <div class="footer-brand"><span>DOMINO</span> STORE</div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://instagram.com/dominostorecl" target="_blank" rel="noopener">
+          <i class="ti ti-brand-instagram"></i> Instagram
+        </a>
+        <a class="footer-link" href="https://challonge.com/es/users/dominostore" target="_blank" rel="noopener">
+          <i class="ti ti-tournament"></i> Challonge
+        </a>
+        <a class="footer-link" href="https://tcgmatch.cl" target="_blank" rel="noopener">
+          <i class="ti ti-cards"></i> TCG Match
+        </a>
+        <a class="footer-link" href="https://wa.me/56900000000" target="_blank" rel="noopener">
+          <i class="ti ti-brand-whatsapp"></i> WhatsApp
+        </a>
+      </div>
     </div>
     <div class="footer-copy">
-      Liga Domino Battle City · Santiago de Chile · Temporada 1 — 2026
+      Liga Domino Battle City &middot; Santiago de Chile &middot; Temporada 1 - 2026
     </div>
   </div>
 </footer>
 
+</div>
+
 <script>
   const openDate = new Date('2026-06-20T15:00:00-04:00');
 
-  function pad(n) { return String(n).padStart(2, '0'); }
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function setText(id, value) {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  }
 
   function updateCountdown() {
     const now = new Date();
     const diff = openDate - now;
+
     if (diff <= 0) {
-      ['c-days','c-hours','c-mins','c-secs'].forEach(id => {
-        document.getElementById(id).textContent = '00';
-      });
+      ['c-days', 'c-hours', 'c-mins', 'c-secs'].forEach(id => setText(id, '00'));
+      setText('stat-days', '0');
       return;
     }
+
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('c-days').textContent = pad(d);
-    document.getElementById('c-hours').textContent = pad(h);
-    document.getElementById('c-mins').textContent = pad(m);
-    document.getElementById('c-secs').textContent = pad(s);
-    document.getElementById('stat-days').textContent = d;
+
+    setText('c-days', pad(d));
+    setText('c-hours', pad(h));
+    setText('c-mins', pad(m));
+    setText('c-secs', pad(s));
+    setText('stat-days', d);
+  }
+
+  function initRevealOnScroll() {
+    const items = document.querySelectorAll('.reveal');
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(item => item.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -60px 0px' });
+
+    items.forEach(item => observer.observe(item));
   }
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  initRevealOnScroll();
 </script>
 
 </body>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Liga Domino Battle City — Plataforma competitiva de Pokémon TCG Live. Torneos online, rankings y más. Santiago, Chile.">
+<title>Liga Domino Battle City — Domino Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  :root {
+    --red: #C0392B;
+    --red-dark: #922b21;
+    --red-light: #fdf0ee;
+    --gold: #D4A017;
+    --gold-light: #fdf8ec;
+    --bg: #0d0d0d;
+    --bg2: #161616;
+    --bg3: #1f1f1f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0f0;
+    --text2: #9a9a9a;
+    --text3: #5a5a5a;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAVBAR */
+  .navbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.5rem; height: 56px;
+  }
+  .navbar-brand { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; color: var(--text); }
+  .navbar-brand span { color: var(--red); }
+  .navbar-links { display: flex; gap: 4px; }
+  .navbar-links a {
+    font-size: 13px; color: var(--text2); padding: 6px 12px;
+    border-radius: 20px; transition: all 0.15s;
+  }
+  .navbar-links a:hover { color: var(--text); background: var(--bg3); }
+  .navbar-cta {
+    background: var(--red); color: #fff; border: none;
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    padding: 7px 16px; border-radius: 20px; cursor: pointer;
+    transition: opacity 0.15s; text-decoration: none;
+  }
+  .navbar-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,57,43,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .season-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: 5px 14px;
+    border: 0.5px solid rgba(192,57,43,0.4);
+    border-radius: 20px; color: var(--red); margin-bottom: 1.5rem;
+    background: rgba(192,57,43,0.08);
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 8vw, 72px);
+    letter-spacing: 3px; line-height: 1;
+    color: var(--text); margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero-sub { font-size: 15px; color: var(--text2); margin-bottom: 2.5rem; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    margin-bottom: 2.5rem;
+  }
+  .stat-num { font-family: var(--font-display); font-size: 36px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .countdown {
+    display: flex; gap: 10px; justify-content: center; margin-bottom: 2.5rem;
+  }
+  .count-box {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 12px 18px; min-width: 64px;
+    text-align: center;
+  }
+  .count-num { font-family: var(--font-display); font-size: 32px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .count-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .count-sep { font-family: var(--font-display); font-size: 28px; color: var(--red); align-self: center; }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: #fff; border: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    padding: 11px 24px; border-radius: var(--radius); cursor: pointer;
+    transition: opacity 0.15s; text-decoration: none;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text2);
+    border: 0.5px solid var(--border2);
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    padding: 11px 24px; border-radius: var(--radius); cursor: pointer;
+    transition: all 0.15s; text-decoration: none;
+  }
+  .btn-secondary:hover { color: var(--text); border-color: var(--border2); background: var(--bg2); }
+
+  /* SECTIONS */
+  .section { padding: 3rem 1.5rem; border-bottom: 0.5px solid var(--border); max-width: 900px; margin: 0 auto; }
+  .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
+  .section-title {
+    font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title i { font-size: 22px; color: var(--red); }
+  .section-sub { font-size: 13px; color: var(--text3); }
+
+  /* TOURNAMENT CARDS */
+  .tournament-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .t-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .t-card:hover { border-color: var(--border2); }
+  .t-card.featured { border-color: rgba(192,57,43,0.5); background: linear-gradient(135deg, var(--bg2) 0%, rgba(192,57,43,0.05) 100%); }
+  .t-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 8px; }
+  .t-name { font-weight: 600; font-size: 15px; color: var(--text); }
+  .t-date { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .badge {
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+  }
+  .badge-free { background: rgba(192,57,43,0.15); color: #e88b82; }
+  .badge-open { background: rgba(39,80,10,0.3); color: #a8d96b; }
+  .badge-upcoming { background: rgba(21,65,132,0.3); color: #79b0e8; }
+  .badge-closed { background: var(--bg3); color: var(--text3); }
+  .t-info { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1rem; }
+  .t-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); }
+  .t-row i { font-size: 15px; color: var(--text3); flex-shrink: 0; }
+  .t-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem; border-top: 0.5px solid var(--border);
+  }
+  .t-players { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+  .t-btn {
+    font-size: 12px; font-family: var(--font-body); font-weight: 500;
+    padding: 6px 14px; border-radius: 20px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s;
+    text-decoration: none;
+  }
+  .t-btn-primary { background: var(--red); color: #fff; border: none; }
+  .t-btn-primary:hover { opacity: 0.85; }
+  .t-btn-outline { background: transparent; color: var(--text2); border: 0.5px solid var(--border2); }
+  .t-btn-outline:hover { color: var(--text); background: var(--bg3); }
+
+  /* RANKING TABLE */
+  .ranking-wrap {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .ranking-table { width: 100%; border-collapse: collapse; }
+  .ranking-table th {
+    font-size: 11px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--text3);
+    padding: 10px 16px; border-bottom: 0.5px solid var(--border);
+    text-align: left;
+  }
+  .ranking-table td {
+    font-size: 13px; color: var(--text);
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border);
+  }
+  .ranking-table tr:last-child td { border-bottom: none; }
+  .ranking-table tbody tr:hover td { background: var(--bg3); }
+  .pos-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    font-size: 12px; font-weight: 600;
+  }
+  .pos-1 { background: rgba(212,160,23,0.2); color: var(--gold); }
+  .pos-2 { background: rgba(180,180,180,0.15); color: #ccc; }
+  .pos-3 { background: rgba(192,57,43,0.2); color: #e88b82; }
+  .pos-n { background: var(--bg3); color: var(--text3); }
+  .trainer-name { font-weight: 500; }
+  .qualify-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; padding: 2px 8px; border-radius: 20px;
+    background: rgba(39,80,10,0.3); color: #a8d96b;
+  }
+  .points-val { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.5px; color: var(--red); }
+  .empty-state {
+    text-align: center; padding: 3rem 1rem; color: var(--text3);
+  }
+  .empty-state i { font-size: 32px; display: block; margin-bottom: 0.75rem; opacity: 0.3; }
+  .empty-state p { font-size: 14px; }
+  .empty-state small { font-size: 12px; }
+  .points-legend {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 12px 16px;
+    display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .legend-item { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+
+  /* RESULTS */
+  .results-list { display: flex; flex-direction: column; gap: 10px; }
+  .result-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .result-card:hover { border-color: var(--border2); }
+  .result-left { flex: 1; min-width: 0; }
+  .result-title { font-weight: 500; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .result-meta { font-size: 12px; color: var(--text3); display: flex; gap: 12px; flex-wrap: wrap; }
+  .result-meta span { display: flex; align-items: center; gap: 4px; }
+  .result-winner { text-align: right; flex-shrink: 0; }
+  .result-winner-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .result-winner-name { font-weight: 600; font-size: 15px; color: var(--text); }
+  .result-winner-deck { font-size: 12px; color: var(--text2); }
+
+  /* HALL OF FAME */
+  .hall-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .hall-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem 1.25rem;
+    text-align: center; transition: border-color 0.15s;
+  }
+  .hall-card.champion { border-color: rgba(212,160,23,0.4); background: linear-gradient(135deg, var(--bg2) 0%, rgba(212,160,23,0.05) 100%); }
+  .hall-card:hover { border-color: var(--border2); }
+  .hall-season { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .hall-icon { font-size: 32px; margin-bottom: 10px; }
+  .hall-name { font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 4px; }
+  .hall-deck { font-size: 12px; color: var(--text2); }
+  .hall-pending { font-size: 13px; color: var(--text3); }
+
+  /* HOW TO PLAY */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .step-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center;
+  }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(192,57,43,0.15); color: var(--red);
+    font-family: var(--font-display); font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .step-title { font-weight: 600; font-size: 13px; color: var(--text); margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* FOOTER */
+  .footer {
+    padding: 2rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem; max-width: 900px; margin: 0 auto;
+  }
+  .footer-brand { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; }
+  .footer-brand span { color: var(--red); }
+  .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .footer-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text3);
+    padding: 6px 12px; border-radius: 20px;
+    border: 0.5px solid var(--border); transition: all 0.15s;
+  }
+  .footer-link:hover { color: var(--text); border-color: var(--border2); }
+  .footer-copy { width: 100%; text-align: center; font-size: 12px; color: var(--text3); padding-top: 1rem; border-top: 0.5px solid var(--border); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .navbar-links { display: none; }
+    .hero { padding: 3rem 1rem 2.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .section { padding: 2rem 1rem; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand"><span>DOMINO</span> STORE</div>
+  <div class="navbar-links">
+    <a href="#torneos">Torneos</a>
+    <a href="#ranking">Ranking</a>
+    <a href="#resultados">Resultados</a>
+    <a href="#hall">Hall of Fame</a>
+    <a href="#como">Cómo participar</a>
+  </div>
+  <a class="navbar-cta" href="https://challonge.com/es/users/dominostore" target="_blank">Inscribirse</a>
+</nav>
+
+<section class="hero">
+  <div class="season-badge"><i class="ti ti-sword"></i> Temporada 1 — Mayo / Junio 2026</div>
+  <h1>Liga <span>Domino</span><br>Battle City</h1>
+  <p class="hero-sub">Pokémon TCG Live · Formato Estándar · Online · Chile</p>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-days">--</div>
+      <div class="stat-label">Días para el Open</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Fechas totales</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Entrenadores activos</div>
+    </div>
+  </div>
+
+  <div class="countdown">
+    <div class="count-box">
+      <div class="count-num" id="c-days">--</div>
+      <div class="count-label">días</div>
+    </div>
+    <div class="count-sep">:</div>
+    <div class="count-box">
+      <div class="count-num" id="c-hours">--</div>
+      <div class="count-label">horas</div>
+    </div>
+    <div class="count-sep">:</div>
+    <div class="count-box">
+      <div class="count-num" id="c-mins">--</div>
+      <div class="count-label">min</div>
+    </div>
+    <div class="count-sep">:</div>
+    <div class="count-box">
+      <div class="count-num" id="c-secs">--</div>
+      <div class="count-label">seg</div>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+      <i class="ti ti-trophy"></i> Ver bracket en Challonge
+    </a>
+    <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank">
+      <i class="ti ti-brand-instagram"></i> @dominostorecl
+    </a>
+  </div>
+</section>
+
+<main>
+
+  <section id="torneos" class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-calendar-event"></i> Próximos torneos</div>
+      <span class="section-sub">Mié 20:00 · Sáb 15:00</span>
+    </div>
+    <div class="tournament-grid">
+
+      <div class="t-card featured">
+        <div class="t-header">
+          <div>
+            <div class="t-name">Open Final — Temporada 1</div>
+            <div class="t-date">Sábado 20 de junio · 15:00 hrs</div>
+          </div>
+          <span class="badge badge-upcoming">Próximo</span>
+        </div>
+        <div class="t-info">
+          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pokémon TCG Live — Estándar</div>
+          <div class="t-row"><i class="ti ti-tournament"></i> Brackets · BO1 cuartos · BO3 semis y final</div>
+          <div class="t-row"><i class="ti ti-gift"></i> Premio especial según participantes</div>
+          <div class="t-row"><i class="ti ti-star"></i> Top 4 del ranking clasifica gratis</div>
+        </div>
+        <div class="t-footer">
+          <span class="t-players"><i class="ti ti-users"></i> Cupos abiertos</span>
+          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+            Inscribirse <i class="ti ti-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-header">
+          <div>
+            <div class="t-name">Fecha 1 — Miércoles</div>
+            <div class="t-date">Miércoles 20 de mayo · 20:00 hrs</div>
+          </div>
+          <span class="badge badge-free">Gratuito</span>
+        </div>
+        <div class="t-info">
+          <div class="t-row"><i class="ti ti-device-gamepad-2"></i> Pokémon TCG Live — Estándar</div>
+          <div class="t-row"><i class="ti ti-layout-grid"></i> Rondas suizas · BO1</div>
+          <div class="t-row"><i class="ti ti-gift"></i> Sobres para el top 3</div>
+          <div class="t-row"><i class="ti ti-chart-bar"></i> Acumula puntos para el ranking</div>
+        </div>
+        <div class="t-footer">
+          <span class="t-players"><i class="ti ti-users"></i> Inscripciones abiertas</span>
+          <a class="t-btn t-btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+            Inscribirse <i class="ti ti-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="ranking" class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-chart-bar"></i> Ranking — Temporada 1</div>
+      <span class="section-sub">Top 4 clasifica gratis al Open</span>
+    </div>
+    <div class="ranking-wrap">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th style="width:52px">#</th>
+            <th>Entrenador</th>
+            <th style="text-align:center; width:80px">Jugados</th>
+            <th style="text-align:center; width:80px">Puntos</th>
+            <th style="text-align:center; width:120px">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <i class="ti ti-trophy"></i>
+                <p>El ranking se publica tras la Fecha 1</p>
+                <small>Miércoles 20 de mayo · 20:00 hrs</small>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="points-legend">
+      <div class="legend-item"><span class="legend-dot"></span> 1° lugar: 8 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#888"></span> 2° lugar: 6 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#555"></span> 3°–4° lugar: 4 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#333"></span> 5°–8° lugar: 2 pts</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#222"></span> Participación: 1 pt</div>
+    </div>
+  </section>
+
+  <section id="resultados" class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-history"></i> Resultados</div>
+    </div>
+    <div class="results-list">
+      <div class="empty-state">
+        <i class="ti ti-calendar-off"></i>
+        <p>Aún no hay fechas jugadas</p>
+        <small>Primera fecha: 20 de mayo · 20:00 hrs</small>
+      </div>
+    </div>
+  </section>
+
+  <section id="hall" class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-crown"></i> Hall of Fame</div>
+      <span class="section-sub">Campeones de temporada</span>
+    </div>
+    <div class="hall-grid">
+      <div class="hall-card champion">
+        <div class="hall-season">Temporada 1 · Mayo–Junio 2026</div>
+        <div class="hall-icon">🏆</div>
+        <div class="hall-name" style="color: var(--text2);">Por definir</div>
+        <div class="hall-pending">Open Final: 20 de junio</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como" class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-help-circle"></i> Cómo participar</div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Inscríbete</div>
+        <div class="step-desc">Completa el formulario con tu nombre y tu ID de Pokémon TCG Live</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Paga</div>
+        <div class="step-desc">Transfiere la inscripción a Domino Store. Cupo confirmado al recibir el pago</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Únete</div>
+        <div class="step-desc">Entra al grupo de WhatsApp y recibe el bracket antes del inicio</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Juega</div>
+        <div class="step-desc">Busca a tu rival en TCG Live y reporta el resultado en Challonge</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-title">Acumula</div>
+        <div class="step-desc">Suma puntos al ranking y clasifica al Open Final de temporada</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 2rem; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a class="btn-primary" href="https://challonge.com/es/users/dominostore" target="_blank">
+        <i class="ti ti-tournament"></i> Ver torneos en Challonge
+      </a>
+      <a class="btn-secondary" href="https://instagram.com/dominostorecl" target="_blank">
+        <i class="ti ti-brand-instagram"></i> Seguirnos en Instagram
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer style="border-top: 0.5px solid var(--border);">
+  <div class="footer">
+    <div class="footer-brand"><span>DOMINO</span> STORE</div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://instagram.com/dominostorecl" target="_blank">
+        <i class="ti ti-brand-instagram"></i> Instagram
+      </a>
+      <a class="footer-link" href="https://challonge.com/es/users/dominostore" target="_blank">
+        <i class="ti ti-tournament"></i> Challonge
+      </a>
+      <a class="footer-link" href="https://tcgmatch.cl" target="_blank">
+        <i class="ti ti-cards"></i> TCG Match
+      </a>
+      <a class="footer-link" href="https://wa.me/56900000000" target="_blank">
+        <i class="ti ti-brand-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+    <div class="footer-copy">
+      Liga Domino Battle City · Santiago de Chile · Temporada 1 — 2026
+    </div>
+  </div>
+</footer>
+
+<script>
+  const openDate = new Date('2026-06-20T15:00:00-04:00');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = openDate - now;
+    if (diff <= 0) {
+      ['c-days','c-hours','c-mins','c-secs'].forEach(id => {
+        document.getElementById(id).textContent = '00';
+      });
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('c-days').textContent = pad(d);
+    document.getElementById('c-hours').textContent = pad(h);
+    document.getElementById('c-mins').textContent = pad(m);
+    document.getElementById('c-secs').textContent = pad(s);
+    document.getElementById('stat-days').textContent = d;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
